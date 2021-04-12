@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Item_HP
+  - Item_Score
   layers:
   - Default
   - TransparentFX

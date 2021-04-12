@@ -1,24 +1,59 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public float Speed = 10.0f;
-    public float rotateSpeed = 10.0f;
-    public float jumpForce = 10.0f;
+    [SerializeField]
+    private Player player;
+    [SerializeField]
+    GageBar HPGage;
 
-    private float h, v;
+    [SerializeField]
+    Text Score;
 
-    private bool isGround = true;
+    private bool isDead = false;
 
-    Rigidbody body;
+    [SerializeField]
+    protected int MaxHP = 100;
+    public int HPMax
+    {
+        get
+        {
+            return
+            MaxHP;
+        }
+    }
 
+    [SerializeField]
+    protected int CurrentHP = 100;
+    public int HPCurrent
+    {
+        get
+        {
+            return CurrentHP;
+        }
+    }
+
+    int gamePoint = 0;
+    public int GamePoint
+    {
+        get
+        {
+            return gamePoint;
+        }
+    }
+
+    void init()
+    {
+        Reset();
+        HPGage.SetHP(CurrentHP, MaxHP);
+    }
 
     void Start()
     {
-        body = GetComponent<Rigidbody>();
-
+        init();
     }
 
     // Update is called once per frame
@@ -27,44 +62,63 @@ public class Player : MonoBehaviour
 
     }
 
-    void FixedUpdate()
+    private void IncreaseHP(Player player, int value)
     {
-        Move();
-        Jump();
+        CurrentHP += value;
+        if (CurrentHP > 100)
+            CurrentHP = 100;
+
+        HPGage.SetHP(CurrentHP, MaxHP);
+    }
+    private void DecreaseHP(Player player, int value)
+    {
+        if (isDead)
+            return;
+
+        CurrentHP -= value;
+        if (CurrentHP < 0)
+        {
+            CurrentHP = 0;
+            isDead = true;
+        }
+
+        HPGage.SetHP(CurrentHP, MaxHP);
     }
 
-    void Move()
+    private void OnTriggerEnter(Collider collider)
     {
-        h = Input.GetAxis("Horizontal");
-        v = Input.GetAxis("Vertical");
-
-        Vector3 dir = new Vector3(h, 0, v);
-
-
-        if (!(h == 0 && v == 0))
+        if (collider.gameObject.CompareTag("Item_HP"))
         {
-            transform.position += dir.normalized * Speed * Time.deltaTime;
-            //transform.Translate(dir * Speed * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotateSpeed);
+            if (CurrentHP == 100)
+            {
+                Accumulate(50);
+                SetScore(gamePoint);
+                Destroy(collider.gameObject);
+            }
+            IncreaseHP(player, 20);
+            Destroy(collider.gameObject);
         }
+
+        if (collider.gameObject.CompareTag("Item_Score"))
+        {
+            Accumulate(100);
+            SetScore(gamePoint);
+            Destroy(collider.gameObject);
+        }
+
+
     }
 
-    void Jump()
+    public void SetScore(int value)
     {
-        if (Input.GetKey(KeyCode.Space) && isGround)
-        {
-            body.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-            isGround = false;
-        }
+        Score.text = value.ToString();
     }
-
-    // 충돌 함수
-    void OnCollisionEnter(Collision collision)
+    public void Accumulate(int value)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGround = true;
-        }
+        gamePoint += value;
+    }
+    public void Reset()
+    {
+        gamePoint = 0;
     }
 }
