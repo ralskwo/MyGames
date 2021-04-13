@@ -36,15 +36,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Imports\PyroParticles\Demo\DemoScript.cs" />
-     <Compile Include="Assets\Imports\PyroParticles\Demo\DemoScriptEditor.cs" />
-     <Compile Include="Assets\Imports\PyroParticles\Prefab\Script\FireBaseScript.cs" />
-     <Compile Include="Assets\Imports\PyroParticles\Prefab\Script\FireCollisionForwardScript.cs" />
-     <Compile Include="Assets\Imports\PyroParticles\Prefab\Script\FireConstantBaseScript.cs" />
-     <Compile Include="Assets\Imports\PyroParticles\Prefab\Script\FireLightScript.cs" />
-     <Compile Include="Assets\Imports\PyroParticles\Prefab\Script\FireProjectileScript.cs" />
-     <Compile Include="Assets\Imports\PyroParticles\Prefab\Script\MeteorSwarmScript.cs" />
-     <Compile Include="Assets\Imports\PyroParticles\Prefab\Script\SingleLineAttribute.cs" />
      <Compile Include="Assets\Scripts\AnimationScript.cs" />
      <Compile Include="Assets\Scripts\ClearScene.cs" />
      <Compile Include="Assets\Scripts\DeadScene.cs" />
@@ -60,10 +51,7 @@
      <Compile Include="Assets\Scripts\StartScene.cs" />
      <Compile Include="Assets\Scripts\Timer.cs" />
      <Compile Include="Assets\Scripts\Trap1.cs" />
-     <None Include="Assets\Imports\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
      <None Include="Assets\Imports\AurynSky\Gems Ultimate Pack\READ ME.txt" />
-     <None Include="Assets\Imports\PyroParticles\Readme.txt" />
-     <None Include="Assets\Imports\Weapon\Stand\Standard-2Sided.shader" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.19f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
