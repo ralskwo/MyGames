@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
     private float turnSpeed = 10.0f; // 마우스 회전 속도    
     private float xRotate = 0.0f; // 내부 사용할 X축 회전량은 별도 정의 ( 카메라 위 아래 방향 )
     private float moveSpeed = 8.0f; // 이동 속도
-    private float jumpForce = 10.0f; // 점프하는 힘
+    private float jumpForce = 12.0f; // 점프하는 힘
     private bool isGround = true; // 땅에 붙어있는가?
     Rigidbody body; // Rigidbody를 가져올 변수
 
@@ -39,7 +39,7 @@ public class Movement : MonoBehaviour
             float xRotateSize = -Input.GetAxis("Mouse Y") * turnSpeed;
             // 위아래 회전량을 더해주지만 -45도 ~ 80도로 제한 (-45:하늘방향, 80:바닥방향)
             // Clamp 는 값의 범위를 제한하는 함수
-            xRotate = Mathf.Clamp(xRotate + xRotateSize, -15, 80);
+            xRotate = Mathf.Clamp(xRotate + xRotateSize, -25, 60);
 
 
 

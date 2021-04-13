@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     [SerializeField]
     private Player player;
+
     [SerializeField]
     GageBar HPGage;
 
@@ -14,6 +16,11 @@ public class Player : MonoBehaviour
     Text Score;
 
     private bool isDead = false;
+
+    [SerializeField]
+    private Image BloodScreen;
+
+
 
     [SerializeField]
     protected int MaxHP = 100;
@@ -59,7 +66,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (isDead)
+        {
+            SceneManager.LoadScene("DeadScene");
+        }
     }
 
     private void IncreaseHP(Player player, int value)
@@ -95,8 +105,11 @@ public class Player : MonoBehaviour
                 SetScore(gamePoint);
                 Destroy(collider.gameObject);
             }
-            IncreaseHP(player, 20);
-            Destroy(collider.gameObject);
+            else
+            {
+                IncreaseHP(player, 20);
+                Destroy(collider.gameObject);
+            }
         }
 
         if (collider.gameObject.CompareTag("Item_Score"))
@@ -106,8 +119,27 @@ public class Player : MonoBehaviour
             Destroy(collider.gameObject);
         }
 
+        if (collider.gameObject.CompareTag("Trap"))
+        {
+            StartCoroutine(ShowBloodScreen());
+            DecreaseHP(player, 10);
+            if (CurrentHP <= 0)
+            {
+                isDead = true;
+            }
+        }
+    }
+
+    IEnumerator ShowBloodScreen()
+    {
+        BloodScreen.color = new Color(1, 0, 0, UnityEngine.Random.Range(0.2f, 0.3f));
+        yield return new WaitForSeconds(0.3f);
+        BloodScreen.color = Color.clear;
 
     }
+
+
+
 
     public void SetScore(int value)
     {
