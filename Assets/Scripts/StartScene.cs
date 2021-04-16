@@ -4,7 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class StartScene : MonoBehaviour
 {
-    public void onClick()
+    public void onClicktoExplain()
+    {
+        SceneManager.LoadScene("ExplainScene");
+    }
+    public void onClicktoGame()
     {
         SceneManager.LoadScene("SampleScene");
     }
